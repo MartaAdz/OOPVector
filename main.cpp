@@ -40,7 +40,7 @@ public:
 
     //FUNKCIJOS
     bool isempty(){ if (elementai[0]==elementai[dydis-1]) return true;}
-    
+    int getsize(){return dydis;}
 
 
 };
@@ -48,6 +48,7 @@ public:
 int main() {
     Vector a{10};
     Vector b{10, 5.0};
+    std::cout<<b.getsize();
 
 
     return 0;
