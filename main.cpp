@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iostream>
 #include <algorithm>
 
 class Vector{
@@ -24,6 +23,14 @@ public:
         for (int i=0; i!=dydis; i++) elementai[i]=v.elementai[i];
     }
 
+    Vector(std::initializer_list<double> elm)
+    :dydis{static_cast<int>(elm.size())},
+     elementai{new double[elm.size()]}
+    {
+        std::copy(elm.begin(),elm.end(),elementai);
+
+    }
+
     //DESTRUKTORIUS
     ~Vector() {delete[]elementai;}
 
@@ -42,6 +49,7 @@ public:
     bool isempty(){ if (elementai[0]==elementai[dydis-1]) return true;}
     int getsize(){return dydis;}
 
+    //void push_back( const& value );
 
 };
 
@@ -49,7 +57,8 @@ int main() {
     Vector a{10};
     Vector b{10, 5.0};
     std::cout<<b.getsize();
-
-
+    Vector v {1,3,4,5,6,8};
+    for (int i = 0; i != v.getsize() ; ++i) {
+        std::cout<<v[i];}
     return 0;
 }
