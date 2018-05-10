@@ -76,7 +76,17 @@ public:
         dydis++;
     }
     void reserve(size_t newtalpa){
-        if(newtalpa>talpa) talpa=newtalpa;
+        if(newtalpa>talpa){
+            double * newelementai = new double[newtalpa];
+            for (unsigned int i = 0; i <dydis; i++)
+                newelementai[i] = elementai[i];
+            talpa=newtalpa;
+            delete[] elementai;
+            elementai = newelementai;
+        }
+    }
+    void shrink_to_fit(){
+        
     }
 };
 
@@ -86,11 +96,13 @@ int main() {
     std::cout<<std::endl;
 
     a.push_back(3);
-    a.reserve(4);
+    a.reserve(15);
     std::cout<<a.capacity()<<std::endl;
     std::cout<<a.size()<<std::endl;
-    std::cout<<a.back()<<std::endl;
-
+    std::cout<<std::endl;
+    a.shrink_to_fit();
+    std::cout<<a.capacity()<<std::endl;
+    std::cout<<a.size()<<std::endl;
 
 
 
