@@ -1,7 +1,1 @@
-obj/
-bin/
-*.cbp
-*.layout
-*.depend
-*.exe
-*.a
+cmake-build-debug/
