@@ -86,7 +86,7 @@ public:
         }
     }
     void shrink_to_fit(){
-        
+         talpa=dydis;
     }
 };
 
@@ -100,9 +100,10 @@ int main() {
     std::cout<<a.capacity()<<std::endl;
     std::cout<<a.size()<<std::endl;
     std::cout<<std::endl;
+
     a.shrink_to_fit();
-    std::cout<<a.capacity()<<std::endl;
-    std::cout<<a.size()<<std::endl;
+    std::cout<<"talpa po shrink_to_fit "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po shrink_to_fit "<<a.size()<<std::endl;
 
 
 
