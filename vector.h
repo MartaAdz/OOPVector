@@ -1,7 +1,3 @@
-//
-// Created by Marta on 5/11/2018.
-//
-
 #ifndef UZDUOTYS_VECTOR_H
 #define UZDUOTYS_VECTOR_H
 
@@ -70,14 +66,14 @@ public:
         //MODIFIERS
 
     void clear();
-    //insert
+    void insert(unsigned int position, double elm);
     //emplace
     void erase ();
     void push_back(const double& naujas);
     //emplace_back
     void resize (unsigned int newdydis);
     void pop_back();
-    //swap
+    void swap (unsigned int pos1, unsigned int pos2);
 
 };
 

@@ -10,33 +10,14 @@ int main() {
     std::cout<<std::endl;
 
 
-    a.resize(15);
-    std::cout<<"talpa po resize "<<a.capacity()<<std::endl;
-    std::cout<<"dydis po resize "<<a.size()<<std::endl;
-    std::cout<<"elementai po resize "<<std::endl;
+    a.insert(4,5.3);
+    a.swap(4, 7);
+    std::cout<<"talpa po insert "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po insert "<<a.size()<<std::endl;
+    std::cout<<"elementai po insert "<<std::endl;
     for (int i = 0; i < a.size(); ++i) {
-        std::cout<<i+1<<"  "<<a[i]<<std::endl;
+        std::cout<<i<<"  "<<a[i]<<std::endl;
     }
-
-    a.pop_back();
-    std::cout<<"talpa po pop_back "<<a.capacity()<<std::endl;
-    std::cout<<"dydis po pop_back "<<a.size()<<std::endl;
-    std::cout<<"elementai po pop_back "<<std::endl;
-    for (int i = 0; i < a.size(); ++i) {
-        std::cout<<i+1<<"  "<<a[i]<<std::endl;
-    }
-
-    a.erase();
-    std::cout<<"talpa po erase "<<a.capacity()<<std::endl;
-    std::cout<<"dydis po erase "<<a.size()<<std::endl;
-    std::cout<<"pirmas elementas po erase "<<a.front()<<std::endl;
-
-    a.resize(12);
-    std::cout<<"dydis po resize "<<a.size()<<std::endl;
-
-    //std::cout<<"elementai po pop_back "<<std::endl;
-    //for (int i = 0; i < a.size(); ++i) {
-      //  std::cout<<i+1<<"  "<<a[i]<<std::endl;}
 
 
     return 0;

@@ -1,7 +1,5 @@
-//
-// Created by Marta on 5/11/2018.
-//
 #include<iostream>
+#include<iomanip>
 #include<algorithm>
 #include "vector.h"
 
@@ -38,25 +36,39 @@
         delete [] elementai;
         elementai = newelementai;
         dydis = 0;
+        talpa=0;
     }
 
-        //insert
-        //emplace
-
-void Vector::erase (){
-    auto newelementai = new double[0];
-    delete [] elementai;
-    elementai = newelementai;
-
-}
-
-void Vector::push_back(const double& naujas)
-    {
+    void Vector::insert(unsigned int position, double elm){
         if(dydis==talpa) talpa=talpa+3;
-
-        elementai[dydis]=naujas;
         dydis++;
+        auto * newelementai = new double[dydis];
+
+        for (int j = 0; j != position; ++j) newelementai[j] = elementai[j];
+        newelementai[position]=elm;
+        for (int i = position+1; i < dydis; ++i) newelementai[i] = elementai[i-1];
+
+        delete[] elementai;
+        elementai = newelementai;
+
     }
+
+//emplace
+
+    void Vector::erase (){
+        auto newelementai = new double[0];
+        delete [] elementai;
+        elementai = newelementai;
+
+    }
+
+    void Vector::push_back(const double& naujas)
+        {
+            if(dydis==talpa) talpa=talpa+3;
+
+            elementai[dydis]=naujas;
+            dydis++;
+        }
 
     //emplace_back
 
@@ -76,6 +88,7 @@ void Vector::push_back(const double& naujas)
             for (unsigned int i = 0; i != newdydis; i++)
                 newelementai[i] = elementai[i];
             dydis=newdydis;
+            if (talpa<newdydis) talpa=newdydis;
             delete[] elementai;
             elementai = newelementai;
     }
@@ -91,4 +104,8 @@ void Vector::push_back(const double& naujas)
 
     }
 
-    //swap
+    void Vector::swap (unsigned int pos1, unsigned int pos2){
+
+        std::swap(elementai[pos1], elementai[pos2]);
+
+    }
