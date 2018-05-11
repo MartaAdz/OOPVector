@@ -26,9 +26,10 @@ int main() {
         std::cout<<i+1<<"  "<<a[i]<<std::endl;
     }
 
-    a.clear();
-    std::cout<<"talpa po clear "<<a.capacity()<<std::endl;
-    std::cout<<"dydis po clear "<<a.size()<<std::endl;
+    a.erase();
+    std::cout<<"talpa po erase "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po erase "<<a.size()<<std::endl;
+    std::cout<<"pirmas elementas po erase "<<a.front()<<std::endl;
 
     a.resize(12);
     std::cout<<"dydis po resize "<<a.size()<<std::endl;

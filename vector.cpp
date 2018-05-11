@@ -43,8 +43,10 @@
         //insert
         //emplace
 
-void Vector::erase (unsigned int position){
-
+void Vector::erase (){
+    auto newelementai = new double[0];
+    delete [] elementai;
+    elementai = newelementai;
 
 }
 
