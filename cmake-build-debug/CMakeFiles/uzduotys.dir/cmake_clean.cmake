@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/uzduotys.dir/main.cpp.obj"
+  "CMakeFiles/uzduotys.dir/vector.cpp.obj"
   "uzduotys.pdb"
   "uzduotys.exe"
   "uzduotys.exe.manifest"

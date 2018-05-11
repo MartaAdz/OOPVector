@@ -83,6 +83,12 @@
 		<Unit filename="C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/main.cpp">
 			<Option target="uzduotys"/>
 		</Unit>
+		<Unit filename="C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/vector.cpp">
+			<Option target="uzduotys"/>
+		</Unit>
+		<Unit filename="C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/vector.h">
+			<Option target="uzduotys"/>
+		</Unit>
 		<Unit filename="C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
