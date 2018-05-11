@@ -23,8 +23,19 @@ int main() {
     std::cout<<"dydis po pop_back "<<a.size()<<std::endl;
     std::cout<<"elementai po pop_back "<<std::endl;
     for (int i = 0; i < a.size(); ++i) {
-        std::cout<<i+1<<"  "<<a[i]<<std::endl;}
+        std::cout<<i+1<<"  "<<a[i]<<std::endl;
+    }
 
+    a.clear();
+    std::cout<<"talpa po clear "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po clear "<<a.size()<<std::endl;
+
+    a.resize(12);
+    std::cout<<"dydis po resize "<<a.size()<<std::endl;
+
+    //std::cout<<"elementai po pop_back "<<std::endl;
+    //for (int i = 0; i < a.size(); ++i) {
+      //  std::cout<<i+1<<"  "<<a[i]<<std::endl;}
 
 
     return 0;

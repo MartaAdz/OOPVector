@@ -72,7 +72,7 @@ public:
     void clear();
     //insert
     //emplace
-    //erase
+    void erase (unsigned int position);
     void push_back(const double& naujas);
     //emplace_back
     void resize (unsigned int newdydis);

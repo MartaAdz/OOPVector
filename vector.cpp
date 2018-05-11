@@ -20,18 +20,44 @@
     //FUNKCIJOS
 
 
+    //CAPACITY
+
+    //max_size
+
+
+    //ELEMENT_ACCESS
+
+    //at
+    //data
+
+    //MODIFIERS
+
+
     void Vector::clear(){
+        auto newelementai = new double[0];
         delete [] elementai;
+        elementai = newelementai;
         dydis = 0;
     }
 
-    void Vector::push_back(const double& naujas)
+        //insert
+        //emplace
+
+void Vector::erase (unsigned int position){
+
+
+}
+
+void Vector::push_back(const double& naujas)
     {
         if(dydis==talpa) talpa=talpa+3;
 
         elementai[dydis]=naujas;
         dydis++;
     }
+
+    //emplace_back
+
     void Vector::reserve(size_t newtalpa){
         if(newtalpa>talpa){
             auto * newelementai = new double[newtalpa];
@@ -43,16 +69,13 @@
         }
     }
     void Vector::resize (unsigned int newdydis){
-        if (newdydis<dydis){
+
             auto * newelementai = new double[newdydis];
             for (unsigned int i = 0; i != newdydis; i++)
                 newelementai[i] = elementai[i];
             dydis=newdydis;
             delete[] elementai;
             elementai = newelementai;
-        }
-
-        else std::cerr<<"netinkamas parametras"<<std::endl;
     }
 
     void Vector::pop_back(){
@@ -66,3 +89,4 @@
 
     }
 
+    //swap
