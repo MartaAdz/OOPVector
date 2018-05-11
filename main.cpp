@@ -57,7 +57,7 @@ public:
     bool isempty(){if (dydis==0) return true; }
 
     int size(){return dydis;}
-    int capacity(){return talpa;}
+    size_t capacity(){return talpa;}
 
     void clear(){
         delete [] elementai;
@@ -77,7 +77,7 @@ public:
     }
     void reserve(size_t newtalpa){
         if(newtalpa>talpa){
-            double * newelementai = new double[newtalpa];
+            auto * newelementai = new double[newtalpa];
             for (unsigned int i = 0; i <dydis; i++)
                 newelementai[i] = elementai[i];
             talpa=newtalpa;
@@ -85,26 +85,58 @@ public:
             elementai = newelementai;
         }
     }
+    void resize (unsigned int newdydis){
+        if (newdydis<dydis){
+            auto * newelementai = new double[newdydis];
+            for (unsigned int i = 0; i != newdydis; i++)
+                newelementai[i] = elementai[i];
+            dydis=newdydis;
+            delete[] elementai;
+            elementai = newelementai;
+        }
+
+        else std::cerr<<"netinkamas parametras"<<std::endl;
+    }
     void shrink_to_fit(){
          talpa=dydis;
     }
+    void pop_back(){
+        dydis--;
+        auto * newelementai = new double[dydis];
+        for (unsigned int i = 0; i != dydis; i++)
+            newelementai[i] = elementai[i];
+
+        delete[] elementai;
+        elementai = newelementai;
+
+    }
+
+
 };
 
 int main() {
     Vector a(10, 3.8);
-    std::cout<<a.back()<<std::endl;
+
+    std::cout<<"talpa "<<a.capacity()<<std::endl;
+    std::cout<<"paskutinis elementas "<<a.back()<<std::endl;
+    std::cout<<"dydis "<<a.size()<<std::endl;
     std::cout<<std::endl;
 
-    a.push_back(3);
-    a.reserve(15);
-    std::cout<<a.capacity()<<std::endl;
-    std::cout<<a.size()<<std::endl;
-    std::cout<<std::endl;
 
-    a.shrink_to_fit();
-    std::cout<<"talpa po shrink_to_fit "<<a.capacity()<<std::endl;
-    std::cout<<"dydis po shrink_to_fit "<<a.size()<<std::endl;
+    a.resize(15);
+    std::cout<<"talpa po resize "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po resize "<<a.size()<<std::endl;
+    std::cout<<"elementai po resize "<<std::endl;
+    for (int i = 0; i < a.size(); ++i) {
+        std::cout<<i+1<<"  "<<a[i]<<std::endl;
+    }
 
+    a.pop_back();
+    std::cout<<"talpa po pop_back "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po pop_back "<<a.size()<<std::endl;
+    std::cout<<"elementai po pop_back "<<std::endl;
+    for (int i = 0; i < a.size(); ++i) {
+        std::cout<<i+1<<"  "<<a[i]<<std::endl;}
 
 
 
