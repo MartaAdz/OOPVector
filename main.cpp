@@ -2,8 +2,8 @@
 #include <algorithm>
 #include "vector.h"
 int main() {
-    Vector a(10, 3.8);
-
+    Vector b(10, 3.8);
+    Vector a=b;
     std::cout<<"talpa "<<a.capacity()<<std::endl;
     std::cout<<"paskutinis elementas "<<a.back()<<std::endl;
     std::cout<<"dydis "<<a.size()<<std::endl;

@@ -35,6 +35,13 @@ public:
         std::copy(elm.begin(),elm.end(),elementai);
         talpa=dydis;
     }
+    Vector( Vector&& v1 ) :
+            elementai{v1.elementai},
+            dydis{v1.dydis}
+    {
+        v1.elementai= nullptr;
+        v1.dydis=0;
+    }
 
     //DESTRUKTORIUS
     ~Vector() {delete[]elementai;}
