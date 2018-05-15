@@ -80,8 +80,9 @@ public:
     //emplace_back
     void resize (unsigned int newdydis);
     void pop_back();
-    void swap (unsigned int pos1, unsigned int pos2);
+
 
 };
 
+    void swap (Vector&v1,Vector&v2);
 #endif //UZDUOTYS_VECTOR_H

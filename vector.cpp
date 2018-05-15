@@ -104,8 +104,9 @@
 
     }
 
-    void Vector::swap (unsigned int pos1, unsigned int pos2){
+    void swap (Vector&v1, Vector&v2){
 
-        std::swap(elementai[pos1], elementai[pos2]);
-
+        Vector tmp {std::move(v1)};
+        v1=std::move (v2);
+        v2=std::move(tmp);
     }
