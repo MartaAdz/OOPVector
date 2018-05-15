@@ -1,6 +1,7 @@
 #include<iostream>
 #include<iomanip>
 #include<algorithm>
+#include <stdexcept>
 
 #ifndef UZDUOTYS_VECTOR_H
 #define UZDUOTYS_VECTOR_H
@@ -80,6 +81,8 @@ public:
 
 
     void assign (size_type count, const T& value);
+    template< class InputIt > void assign( InputIt first, InputIt last );
+    void assign( std::initializer_list<T> ilist );
 
         //CAPACITY
 
@@ -92,7 +95,9 @@ public:
 
         //ELEMENT_ACCESS
 
-    //at
+    reference at( size_type pos );
+    const_reference at( size_type pos ) const;
+
     reference operator[](size_type i){ return elementai[i];}
     const_reference operator[](size_type i)const{ return elementai[i];}
 
@@ -141,6 +146,19 @@ public:
 
 };
 
+
+    template<class T>
+    T& Vector<T>::at( size_type pos ){
+        if ( pos >= dydis) throw std::out_of_range("Position is out of range");
+        return elementai[pos];
+    }
+
+    template <class T>
+    const T& Vector<T>::at( size_type pos ) const{
+        if ( pos >= dydis) throw std::out_of_range("Position is out of range");
+        return elementai[pos];
+    }
+
     template<class T>
     Vector<T>& Vector<T>::operator = (const Vector<T> & v){
         auto*p= new T [v.dydis];
@@ -150,7 +168,7 @@ public:
         dydis=v.dydis;
         return *this;
     }
-    
+
     template<class T>
     Vector<T>& Vector<T>::operator=(Vector&& v){
         auto*p= new T [v.dydis];
@@ -167,8 +185,7 @@ public:
         dydis = 0;
         for (auto &item: nariai)
             elementai[dydis++] = item;
-
-
+        
     }
 
     //FUNKCIJOS
@@ -182,18 +199,18 @@ public:
 
     }
 
+    template <class T>
+    template <class InputIt>
+    void Vector<T>::assign( InputIt first, InputIt last ){
 
-//CAPACITY
 
-//max_size
+    }
+
+    template <class T>
+    void Vector<T>::assign( std::initializer_list<T> ilist ){
 
 
-//ELEMENT_ACCESS
-
-//at
-//data
-
-//MODIFIERS
+    }
 
     template<class T>
     void Vector<T>::clear(){
@@ -227,9 +244,9 @@ public:
         auto * newelementai = new T [dydis];
          unsigned int index = pos - begin();
         newelementai[index]=elm;
-        for (int j = 0; j != *pos; ++j) newelementai[j] = elementai[j];
+        for (int j = 0; j != *pos; ++j) newelementai[j] = std::move(elementai[j]);
         newelementai[pos]=elm;
-        for (int i = *pos+1; i < dydis; ++i) newelementai[i] = elementai[i-1];
+        for (int i = *pos+1; i < dydis; ++i) newelementai[i] = std::move(elementai[i-1]);
 
         delete[] elementai;
         elementai = newelementai;
@@ -316,7 +333,7 @@ public:
     void Vector<T>::push_back( T&& value ){
         if(dydis==talpa) talpa=talpa+3;
 
-        elementai[dydis]=value;
+        elementai[dydis]=std::move(value);
         dydis++;
     };
 

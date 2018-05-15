@@ -16,6 +16,7 @@ int main() {
     Vector <double> a = {2,4,6,8};
 
     std::cout<<"talpa po resize "<<a.capacity()<<std::endl;
+    std::cout<<"2 elementas su at "<<a.at(1)<<std::endl;
     std::cout<<"dydis po resize "<<a.size()<<std::endl;
     std::cout<<"elementai po resize "<<std::endl;
     for (int i = 0; i < a.size(); ++i) {
