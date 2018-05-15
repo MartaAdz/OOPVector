@@ -17,8 +17,9 @@ public:
         std::fill_n(elementai, d, 0.0);
     }
 
-    Vector(unsigned int d, double reiksme): dydis (d), elementai(new double [dydis]), talpa (d){
+    Vector(unsigned int d, double reiksme) : dydis (d), elementai(new double [dydis]), talpa (d){
         std::fill_n(elementai, d, reiksme);
+
     }
 
     Vector(const Vector&v){
@@ -75,7 +76,7 @@ public:
     void clear();
     void insert(unsigned int position, double elm);
     //emplace
-    void erase ();
+    void erase (unsigned int pos);
     void push_back(const double& naujas);
     //emplace_back
     void resize (unsigned int newdydis);
