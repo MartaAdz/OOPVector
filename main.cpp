@@ -13,13 +13,13 @@ int main() {
 
     Vector <double> c {0,1,2,3,4,5,6,7,8,9};
 
-    c.resize(15, 6.7);
+    Vector <double> a = {2,4,6,8};
 
-    std::cout<<"talpa po resize "<<c.capacity()<<std::endl;
-    std::cout<<"dydis po resize "<<c.size()<<std::endl;
+    std::cout<<"talpa po resize "<<a.capacity()<<std::endl;
+    std::cout<<"dydis po resize "<<a.size()<<std::endl;
     std::cout<<"elementai po resize "<<std::endl;
-    for (int i = 0; i < c.size(); ++i) {
-        std::cout<<i<<"  "<<c[i]<<std::endl;
+    for (int i = 0; i < a.size(); ++i) {
+        std::cout<<i<<"  "<<a[i]<<std::endl;
     }
 
 

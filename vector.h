@@ -70,10 +70,11 @@ public:
     ~Vector() {delete[]elementai;}
 
     //OPERATORIAI
-    T&operator[](size_type i){ return elementai[i];}
-    const T&operator[](size_type i)const{ return elementai[i];}
+
     Vector& operator=(const Vector& v);
-    //operator+
+    Vector& operator=(Vector&& v);
+    Vector& operator=(std::initializer_list<T>);
+
 
     //FUNKCIJOS
 
@@ -92,14 +93,28 @@ public:
         //ELEMENT_ACCESS
 
     //at
-    T& front(){return elementai[0]; }
-    T& back() {return elementai[dydis-1]; }
-    const T& front() const {return elementai[0]; }
-    const T& back()const {return elementai[dydis-1]; }
+    reference operator[](size_type i){ return elementai[i];}
+    const_reference operator[](size_type i)const{ return elementai[i];}
+
+    reference front(){return elementai[0]; }
+    const reference front() const {return elementai[0]; }
+
+    reference back() {return elementai[dydis-1]; }
+    const reference back()const {return elementai[dydis-1]; }
+
+        //ITERATORS
+
     iterator begin() noexcept {return elementai; }
-    const_iterator cbegin()noexcept {return elementai; }
+    const_iterator cbegin()const noexcept {return elementai; }
+
+    reverse_iterator rbegin() noexcept{return reverse_iterator (elementai+dydis);}
+    reverse_iterator rcbegin() const noexcept{return reverse_iterator (elementai+dydis);}
+
     iterator end() noexcept {return elementai+dydis; }
     const_iterator cend() noexcept {return elementai+dydis; }
+
+    reverse_iterator rend() noexcept {return reverse_iterator (elementai); }
+    reverse_iterator rcend() const noexcept {return reverse_iterator (elementai); }
 
 
     //data
@@ -134,6 +149,26 @@ public:
         elementai=p;
         dydis=v.dydis;
         return *this;
+    }
+    
+    template<class T>
+    Vector<T>& Vector<T>::operator=(Vector&& v){
+        auto*p= new T [v.dydis];
+        for (int i=0; i!=v.dydis; i++) p[i]=std::move(v.elementai[i]);
+        delete[]elementai;
+        elementai=p;
+        dydis=v.dydis;
+        return *this;
+    }
+    template<class T>
+    Vector<T>& Vector<T>::operator=(std::initializer_list<T> nariai){
+
+        if (talpa<nariai.size()) talpa=nariai.size();
+        dydis = 0;
+        for (auto &item: nariai)
+            elementai[dydis++] = item;
+
+
     }
 
     //FUNKCIJOS
