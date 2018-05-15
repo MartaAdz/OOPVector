@@ -109,41 +109,43 @@ public:
     void clear();
     iterator insert(T* pos,const T& elm);
     iterator insert(const_iterator position,T&& elm);
-
+    iterator insert( const_iterator pos, size_type count, const T& value );
+    template <class InputIt> iterator insert(iterator pos, InputIt first, InputIt last);
+    iterator insert( const_iterator pos, std::initializer_list<T> newval );
     //emplace
-    //iterator erase (iterator pos);
+
     iterator erase(iterator);
     iterator erase(iterator first, iterator last );
-    void push_back(const double& naujas);
+    void push_back(const T& naujas);
+    void push_back( T&& value);
     //emplace_back
     void resize (unsigned int newdydis);
+    void resize(unsigned int count, const T& value );
     void pop_back();
 
 
 };
 
-template<class T>
-Vector<T>& Vector<T>::operator = (const Vector<T> & v){
-    auto*p= new T [v.dydis];
-    for (int i=0; i!=v.dydis; i++) p[i]=v.elementai[i];
-    delete[]elementai;
-    elementai=p;
-    dydis=v.dydis;
-    return *this;
-}
-
-//FUNKCIJOS
-template <class T>
-void Vector<T>::assign (typename Vector<T>::size_type count, const T& value){
-
-    if (talpa<count) talpa=count;
-    for (unsigned int i = 0; i < count; ++i) {
-        elementai[i]=value;
+    template<class T>
+    Vector<T>& Vector<T>::operator = (const Vector<T> & v){
+        auto*p= new T [v.dydis];
+        for (int i=0; i!=v.dydis; i++) p[i]=v.elementai[i];
+        delete[]elementai;
+        elementai=p;
+        dydis=v.dydis;
+        return *this;
     }
 
+    //FUNKCIJOS
+    template <class T>
+    void Vector<T>::assign (typename Vector<T>::size_type count, const T& value){
 
+        if (talpa<count) talpa=count;
+        for (unsigned int i = 0; i < count; ++i) {
+            elementai[i]=value;
+        }
 
-}
+    }
 
 
 //CAPACITY
@@ -158,30 +160,30 @@ void Vector<T>::assign (typename Vector<T>::size_type count, const T& value){
 
 //MODIFIERS
 
-template<class T>
-void Vector<T>::clear(){
-    auto newelementai = new T [0];
-    delete [] elementai;
-    elementai = newelementai;
-    dydis = 0;
-    talpa=0;
-}
+    template<class T>
+    void Vector<T>::clear(){
+        auto newelementai = new T [0];
+        delete [] elementai;
+        elementai = newelementai;
+        dydis = 0;
+        talpa=0;
+    }
 
-template<class T>
-T* Vector<T>::insert(T* pos,const T& elm){
-    if(dydis==talpa) talpa=talpa+3;
-    dydis++;
-    auto * newelementai = new T [dydis];
+    template<class T>
+    T* Vector<T>::insert(T* pos,const T& elm){
+        if(dydis==talpa) talpa=talpa+3;
+        dydis++;
+        auto * newelementai = new T [dydis];
 
-    for (unsigned int j = 0; j != *pos; ++j) newelementai[j] = elementai[j];
-    unsigned int index = pos - begin();
-    newelementai[index]=elm;
+        for (unsigned int j = 0; j != *pos; ++j) newelementai[j] = elementai[j];
+        unsigned int index = pos - begin();
+        newelementai[index]=elm;
 
-    for (unsigned int i = *pos+1; i < dydis; ++i) newelementai[i] = elementai[i-1];
+        for (unsigned int i = *pos+1; i < dydis; ++i) newelementai[i] = elementai[i-1];
 
-    delete[] elementai;
-    elementai = newelementai;
-}
+        delete[] elementai;
+        elementai = newelementai;
+    }
 
     template<class T>
     T* Vector<T>::insert(const T* pos, T&& elm){
@@ -199,83 +201,142 @@ T* Vector<T>::insert(T* pos,const T& elm){
 
     }
 
+    template<class T>
+    T* Vector<T>::insert(const_iterator pos, size_type count, const T& elm ){
+        if(talpa<dydis+count) talpa+=count;
+        dydis+=count;
+
+        auto * newelementai = new T [dydis];
+
+        for (int i = 0; i != *pos; ++i) newelementai[i]=elementai[i];
+
+        for (int j = *pos; j != *pos+count; ++j) newelementai[j]=elm;
+
+        for (int k = *pos+count; k != dydis ; ++k) newelementai[k]=elementai[k-count];
+
+        delete[] elementai;
+        elementai = newelementai;
+
+    }
+    template<class T>                                                       //NEEDS ATTENTION
+    template <class InputIt>
+    T* Vector<T>::insert(iterator pos, InputIt first, InputIt last){
+
+
+
+        auto * newelementai = new T [dydis];
+
+
+
+        delete[] elementai;
+        elementai = newelementai;
+
+    }
+    template <class T>                                                       //NEEDS ATTENTION
+    T* Vector<T>::insert( const_iterator pos, std::initializer_list<T> newval ){
+
+
+    }
+
 //emplace
-template<class T>
-T* Vector<T>::erase (T* pos){
-    auto newelementai = new T [dydis -1];
-    for (unsigned int i = 0; i != *pos; ++i) {
-        newelementai[i]=elementai[i];
+    template<class T>
+    T* Vector<T>::erase (T* pos){
+        auto newelementai = new T [dydis -1];
+        for (unsigned int i = 0; i != *pos; ++i) {
+            newelementai[i]=elementai[i];
+        }
+        for (unsigned int j = *pos; j != dydis; ++j) {
+            newelementai[j]=elementai[j+1];
+        }
+        delete [] elementai;
+        elementai = newelementai;
+        dydis--;
+
     }
-    for (unsigned int j = *pos; j != dydis; ++j) {
-        newelementai[j]=elementai[j+1];
+    template<class T>
+    T* Vector<T>::erase(T* first, T* last ){
+        auto newelementai = new T [dydis -1];
+        auto diff=last-first;
+        for (unsigned int i = 0; i != *first+1; ++i) {
+            newelementai[i]=elementai[i];
+        }
+        for (unsigned int j = *last-1; j !=dydis; ++j) {
+            newelementai[j]=elementai[j+diff];
+        }
+        delete [] elementai;
+        elementai = newelementai;
+        dydis-=diff;
+
     }
-    delete [] elementai;
-    elementai = newelementai;
-    dydis--;
 
-}
-template<class T>
-T* Vector<T>::erase(T* first, T* last ){
-    auto newelementai = new T [dydis -1];
-    auto diff=last-first;
-    for (unsigned int i = 0; i != *first+1; ++i) {
-        newelementai[i]=elementai[i];
+    template<class T>
+    void Vector<T>::push_back(const T& naujas)
+    {
+        if(dydis==talpa) talpa=talpa+3;
+
+        elementai[dydis]=naujas;
+        dydis++;
     }
-    for (unsigned int j = *last-1; j !=dydis; ++j) {
-        newelementai[j]=elementai[j+diff];
+    template <class T>
+    void Vector<T>::push_back( T&& value ){
+        if(dydis==talpa) talpa=talpa+3;
+
+        elementai[dydis]=value;
+        dydis++;
+    };
+
+    //emplace_back
+    template<class T>
+    void Vector<T>::reserve(size_t newtalpa){
+        if(newtalpa>talpa){
+            auto * newelementai = new T[newtalpa];
+            for (unsigned int i = 0; i <dydis; i++) newelementai[i] = elementai[i];
+            talpa=newtalpa;
+            delete[] elementai;
+            elementai = newelementai;
+        }
     }
-    delete [] elementai;
-    elementai = newelementai;
-    dydis-=diff;
+    template<class T>
+    void Vector<T>::resize (unsigned int newdydis){
 
-}
-
-template<class T>
-void Vector<T>::push_back(const double& naujas)
-{
-    if(dydis==talpa) talpa=talpa+3;
-
-    elementai[dydis]=naujas;
-    dydis++;
-}
-
-//emplace_back
-template<class T>
-void Vector<T>::reserve(size_t newtalpa){
-    if(newtalpa>talpa){
-        auto * newelementai = new T[newtalpa];
-        for (unsigned int i = 0; i <dydis; i++) newelementai[i] = elementai[i];
-        talpa=newtalpa;
+        auto * newelementai = new double[newdydis];
+        for (unsigned int i = 0; i != newdydis; i++) newelementai[i] = elementai[i];
+        dydis=newdydis;
+        if (talpa<newdydis) talpa=newdydis;
         delete[] elementai;
         elementai = newelementai;
     }
-}
-template<class T>
-void Vector<T>::resize (unsigned int newdydis){
 
-    auto * newelementai = new double[newdydis];
-    for (unsigned int i = 0; i != newdydis; i++) newelementai[i] = elementai[i];
-    dydis=newdydis;
-    if (talpa<newdydis) talpa=newdydis;
-    delete[] elementai;
-    elementai = newelementai;
-}
-template<class T>
-void Vector<T>::pop_back(){
-    dydis--;
-    auto * newelementai = new double[dydis];
-    for (unsigned int i = 0; i != dydis; i++) newelementai[i] = elementai[i];
+    template<class T>
+    void Vector<T>::resize(unsigned int count, const T& value ){
 
-    delete[] elementai;
-    elementai = newelementai;
+        auto * newelementai = new T [dydis+count];
+        for (unsigned int i = 0; i != size(); i++) newelementai[i] = elementai[i];
+        for (unsigned int j = dydis; j < dydis+count; ++j) newelementai[j]=value;
 
-}
-template<class T>
-void swap (Vector<T>&v1, Vector<T>&v2){
-    Vector<T> tmp {std::move(v1)};
-    v1=std::move (v2);
-    v2=std::move(tmp);
-}
+        if (talpa<count) talpa=count;
+        dydis=count;
+
+        delete[] elementai;
+        elementai = newelementai;
+    }
+
+    template<class T>
+    void Vector<T>::pop_back(){
+        dydis--;
+        auto * newelementai = new double[dydis];
+        for (unsigned int i = 0; i != dydis; i++) newelementai[i] = elementai[i];
+
+        delete[] elementai;
+        elementai = newelementai;
+
+    }
+    template<class T>
+    void swap (Vector<T>&v1, Vector<T>&v2){
+        Vector<T> tmp {std::move(v1)};
+        v1=std::move (v2);
+        v2=std::move(tmp);
+    }
 
     template <class T>
     void swap (Vector<T>&v1,Vector<T>&v2);

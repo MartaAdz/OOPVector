@@ -12,12 +12,12 @@ int main() {
 //    std::cout<<std::endl;
 
     Vector <double> c {0,1,2,3,4,5,6,7,8,9};
-    c.size();
-    c.insert(c.begin()+2, 4.9);
-    //c.assign(3, 6.7);
-//    std::cout<<"talpa po swap "<<c.begin()<<std::endl;
-//    std::cout<<"dydis po swap "<<c.end()<<std::endl;
-    std::cout<<"elementai po swap "<<std::endl;
+
+    c.resize(15, 6.7);
+
+    std::cout<<"talpa po resize "<<c.capacity()<<std::endl;
+    std::cout<<"dydis po resize "<<c.size()<<std::endl;
+    std::cout<<"elementai po resize "<<std::endl;
     for (int i = 0; i < c.size(); ++i) {
         std::cout<<i<<"  "<<c[i]<<std::endl;
     }
