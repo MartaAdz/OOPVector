@@ -140,11 +140,11 @@ public:
     iterator erase(iterator first, iterator last );
     void push_back(const T& naujas);
     void push_back( T&& value);
-    //emplace_back
+    template< class... Args > void emplace_back( Args&&... args );
     void resize (unsigned int newdydis);
     void resize(unsigned int count, const T& value );
+    template< class... Args > iterator emplace( const_iterator pos, Args&&... args );
     void pop_back();
-
 
 };
 
@@ -396,7 +396,14 @@ public:
         dydis++;
     };
 
-    //emplace_back
+    template <class T>
+    template< class... Args >
+    void Vector<T>::emplace_back( Args&&... args ){
+        if(dydis==talpa) talpa=talpa+3;
+        elementai[dydis] = std::move( T( std::forward<Args>(args) ... ) );
+        dydis++;
+    }
+
     template<class T>
     void Vector<T>::reserve(size_t newtalpa){
         if(newtalpa>talpa){
@@ -431,6 +438,13 @@ public:
         delete[] elementai;
         elementai = newelementai;
     }
+    template <class T>
+    template< class... Args >
+    T* Vector<T>::emplace( const T* pos, Args&&... args ){              //needs attention
+
+
+
+    }
 
     template<class T>
     void Vector<T>::pop_back(){
@@ -449,6 +463,4 @@ public:
         v2=std::move(tmp);
     }
 
-    template <class T>
-    void swap (Vector<T>&v1,Vector<T>&v2);
 #endif //UZDUOTYS_VECTOR_H

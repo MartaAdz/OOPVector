@@ -16,7 +16,9 @@ int main() {
     Vector <double> c {2.1,4.1,6.1,8.1};
     std::initializer_list<double> elm {7.8, 4.7,5.5,6.9};
 
-    a.insert(a.begin()+2, elm);
+    //a.insert(a.begin()+2, elm);
+    //a.emplace_back(2);
+    swap(a,c);
 
 //    std::cout<<"talpa po resize "<<a.capacity()<<std::endl;
 //    std::cout<<"2 elementas su at "<<a.at(1)<<std::endl;
