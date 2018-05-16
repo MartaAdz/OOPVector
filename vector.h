@@ -203,12 +203,12 @@ public:
 
         if (talpa<count) talpa=count;
 
-        auto newelementai = new T [0];
+        auto newelementai = new T [dydis];
 
         for (unsigned int i = 0; i < count; ++i) {
             newelementai[i]=value;
         }
-        
+
         delete [] elementai;
         elementai = newelementai;
 
@@ -221,7 +221,7 @@ public:
         size_type count = last-first;
         if (talpa<count) talpa=count;
 
-        auto newelementai = new T [0];
+        auto newelementai = new T [dydis];
 
         for (unsigned int i = 0; i < count; ++i) {
             newelementai[i]=*first;
@@ -233,12 +233,12 @@ public:
     }
 
     template <class T>
-    void Vector<T>::assign( std::initializer_list<T> elm ){                //NEEDS ATTENTION
+    void Vector<T>::assign( std::initializer_list<T> elm ){
 
         size_t count = elm.size();
         if (talpa<count) talpa=count;
 
-        auto newelementai = new T [0];
+        auto newelementai = new T [dydis];
 
         for (int i = 0; i < count; ++i) {
             newelementai[i]=elm.begin()+i;
@@ -306,23 +306,50 @@ public:
         elementai = newelementai;
 
     }
-    template<class T>                                                       //NEEDS ATTENTION
+    template<class T>                                                      
     template <class InputIt>
     T* Vector<T>::insert(iterator pos, InputIt first, InputIt last){
 
+        unsigned int count= last-first;
 
+        if (talpa<talpa+count) talpa+=count;
+        dydis+=count;
+        auto newelementai = new T [dydis];
 
-        auto * newelementai = new T [dydis];
+        for (int i = 0; i != *pos; ++i) newelementai[i]=elementai[i];
 
+        for (int j = *pos; j < *pos+count; ++j) {
+            newelementai[j]=*first;
+            first++;
+        }
+        for (int k = *pos+count; k < dydis; ++k) newelementai[k]=elementai[k-count];
 
-
-        delete[] elementai;
+        delete [] elementai;
         elementai = newelementai;
 
     }
-    template <class T>                                                       //NEEDS ATTENTION
-    T* Vector<T>::insert( const_iterator pos, std::initializer_list<T> newval ){
+    template <class T>
+    T* Vector<T>::insert( const_iterator pos, std::initializer_list<T> elm ){
 
+        size_t count = elm.size();
+        if (talpa<talpa+count) talpa+=count;
+        dydis+=count;
+        auto newelementai = new T [dydis];
+
+        for (int i = 0; i != *pos; ++i) newelementai[i]=elementai[i];
+
+        unsigned int i = 0;
+        for (int j = *pos; j < *pos+elm.size(); ++j) {
+
+            T value = *(elm.begin()+i);
+            newelementai[j]=value;
+            i++;
+
+        }
+        for (int k = *pos+elm.size(); k < dydis; ++k) newelementai[k]=elementai[k-count];
+
+        delete [] elementai;
+        elementai = newelementai;
 
     }
 
