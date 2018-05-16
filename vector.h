@@ -83,7 +83,7 @@ public:
 
     void assign (size_type count, const T& value);
     template< class InputIt > void assign( InputIt first, InputIt last );
-    void assign( std::initializer_list<T> ilist );
+    void assign( std::initializer_list<T> elm );
 
         //CAPACITY
 
@@ -122,10 +122,10 @@ public:
     reverse_iterator rend() noexcept {return reverse_iterator (elementai); }
     reverse_iterator rcend() const noexcept {return reverse_iterator (elementai); }
 
+    iterator data() noexcept{return elementai; }
+    const_iterator data() const noexcept{return elementai; }
 
-    //data
-
-        //MODIFIERS
+    //MODIFIERS
 
     void clear();
     iterator insert(T* pos,const T& elm);
@@ -205,9 +205,7 @@ public:
 
         auto newelementai = new T [dydis];
 
-        for (unsigned int i = 0; i < count; ++i) {
-            newelementai[i]=value;
-        }
+        for (unsigned int i = 0; i < count; ++i)newelementai[i]=value;
 
         delete [] elementai;
         elementai = newelementai;
@@ -240,9 +238,7 @@ public:
 
         auto newelementai = new T [dydis];
 
-        for (int i = 0; i < count; ++i) {
-            newelementai[i]=elm.begin()+i;
-        }
+        for (int i = 0; i < count; ++i) newelementai[i]=elm.begin()+i;
 
         delete [] elementai;
         elementai = newelementai;
@@ -306,7 +302,7 @@ public:
         elementai = newelementai;
 
     }
-    template<class T>                                                      
+    template<class T>
     template <class InputIt>
     T* Vector<T>::insert(iterator pos, InputIt first, InputIt last){
 
