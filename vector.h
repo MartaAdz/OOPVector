@@ -2,6 +2,7 @@
 #include<iomanip>
 #include<algorithm>
 #include <stdexcept>
+#include <utility>
 
 #ifndef UZDUOTYS_VECTOR_H
 #define UZDUOTYS_VECTOR_H
@@ -73,7 +74,7 @@ public:
     //OPERATORIAI
 
     Vector& operator=(const Vector& v);
-    Vector& operator=(Vector&& v);
+    Vector& operator=(Vector&& v) noexcept;
     Vector& operator=(std::initializer_list<T>);
 
 
@@ -88,7 +89,7 @@ public:
 
     bool empty(){if (dydis==0) return true; }
     unsigned int size(){return dydis;}
-    //max_size
+    unsigned int max_size() const noexcept;
     void reserve(size_t newtalpa);
     size_t capacity(){return talpa;}
     void shrink_to_fit(){ talpa=dydis;}
@@ -132,6 +133,7 @@ public:
     iterator insert( const_iterator pos, size_type count, const T& value );
     template <class InputIt> iterator insert(iterator pos, InputIt first, InputIt last);
     iterator insert( const_iterator pos, std::initializer_list<T> newval );
+
     //emplace
 
     iterator erase(iterator);
@@ -170,7 +172,7 @@ public:
     }
 
     template<class T>
-    Vector<T>& Vector<T>::operator=(Vector&& v){
+    Vector<T>& Vector<T>::operator=(Vector&& v) noexcept{
         auto*p= new T [v.dydis];
         for (int i=0; i!=v.dydis; i++) p[i]=std::move(v.elementai[i]);
         delete[]elementai;
@@ -179,23 +181,36 @@ public:
         return *this;
     }
     template<class T>
-    Vector<T>& Vector<T>::operator=(std::initializer_list<T> nariai){
+    Vector<T>& Vector<T>::operator=(std::initializer_list<T> nariai) {
 
         if (talpa<nariai.size()) talpa=nariai.size();
         dydis = 0;
         for (auto &item: nariai)
             elementai[dydis++] = item;
-        
+
     }
 
     //FUNKCIJOS
+
+    template <typename T>
+    unsigned int Vector<T>::max_size() const noexcept {             //NEEDS ATTENTION
+
+        //return LNI_VECTOR_MAX_SZ;
+    }
+
     template <class T>
     void Vector<T>::assign (typename Vector<T>::size_type count, const T& value){
 
         if (talpa<count) talpa=count;
+
+        auto newelementai = new T [0];
+
         for (unsigned int i = 0; i < count; ++i) {
-            elementai[i]=value;
+            newelementai[i]=value;
         }
+        
+        delete [] elementai;
+        elementai = newelementai;
 
     }
 
@@ -203,13 +218,34 @@ public:
     template <class InputIt>
     void Vector<T>::assign( InputIt first, InputIt last ){
 
+        size_type count = last-first;
+        if (talpa<count) talpa=count;
 
+        auto newelementai = new T [0];
+
+        for (unsigned int i = 0; i < count; ++i) {
+            newelementai[i]=*first;
+            first++;
+        }
+
+        delete [] elementai;
+        elementai = newelementai;
     }
 
     template <class T>
-    void Vector<T>::assign( std::initializer_list<T> ilist ){
+    void Vector<T>::assign( std::initializer_list<T> elm ){                //NEEDS ATTENTION
 
+        size_t count = elm.size();
+        if (talpa<count) talpa=count;
 
+        auto newelementai = new T [0];
+
+        for (int i = 0; i < count; ++i) {
+            newelementai[i]=elm.begin()+i;
+        }
+
+        delete [] elementai;
+        elementai = newelementai;
     }
 
     template<class T>

@@ -13,8 +13,8 @@ int main() {
 
     Vector <double> c {0,1,2,3,4,5,6,7,8,9};
 
-    Vector <double> a = {2,4,6,8};
-
+    Vector <double> a {2,4,6,8};
+    std::cout<<a.max_size()<<std::endl;
     std::cout<<"talpa po resize "<<a.capacity()<<std::endl;
     std::cout<<"2 elementas su at "<<a.at(1)<<std::endl;
     std::cout<<"dydis po resize "<<a.size()<<std::endl;
