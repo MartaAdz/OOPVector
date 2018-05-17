@@ -271,7 +271,7 @@ public:
 
     template<class T>
     T* Vector<T>::insert(T* pos, const T& elm){
-        if(sz==cpt) cpt=cpt+3;
+        if(sz==cpt) cpt*=2;
         sz++;
         auto * newelementai = new T [sz];
 
@@ -287,7 +287,7 @@ public:
 
     template<class T>
     T* Vector<T>::insert(const T* pos, T&& elm){
-        if(sz==cpt) cpt=cpt+3;
+        if(sz==cpt) cpt*=2;
         sz++;
         auto * newelementai = new T [sz];
          unsigned int index = pos - begin();
@@ -303,7 +303,7 @@ public:
 
     template<class T>
     T* Vector<T>::insert(const_iterator pos, size_type count, const T& elm ){
-        if(cpt<sz+count) cpt+=count;
+        if(cpt<sz+count) cpt*=2;
         sz+=count;
 
         auto * newelementai = new T [sz];
@@ -324,7 +324,7 @@ public:
 
         unsigned int count= last-first;
 
-        if (cpt<cpt+count) cpt+=count;
+        if (cpt<sz+count) cpt*=2;
         sz+=count;
         auto newelementai = new T [sz];
 
@@ -344,7 +344,7 @@ public:
     T* Vector<T>::insert( const_iterator pos, std::initializer_list<T> elm ){
 
         size_t count = elm.size();
-        if (cpt<cpt+count) cpt+=count;
+        if (cpt<sz+count) cpt*=2;
         sz+=count;
         auto newelementai = new T [sz];
 
@@ -399,27 +399,21 @@ public:
     template<class T>
     void Vector<T>::push_back(const T& value)
     {
-
-        if (cpt==0) cpt=1;
-
-        if (sz==cpt) cpt+=3;
-
-
-
-        auto newelementai= new T[cpt];
-        for (int i = 0; i < sz; ++i) {
-            newelementai[i]=elem[i];
+        if (sz >= cpt) {
+            cpt*=2;
+            reserve(cpt);
         }
-        newelementai[sz+1]=value;
-        delete[] elem;
-        elem=newelementai;
+
+        sz++;
+        elem [sz] = value;
+        std::cout<<"capacity po reserve "<<cpt<<"\n sz po reserve "<<sz<<std::endl;
     }
 
 
     template <class T>
     template< class... Args >
-    void Vector<T>::emplace_back( Args&&... args ){
-        if(sz==cpt) cpt=cpt+3;
+    void Vector<T>::emplace_back( Args&&... args){
+        if(sz==cpt) cpt*=2;
         elem[sz] = std::move( T( std::forward<Args>(args) ... ) );
         sz++;
     }
@@ -427,17 +421,15 @@ public:
     template<class T>
     void Vector<T>::reserve(size_t newtalpa){
         if(newtalpa>cpt){
-            auto * newelementai = new T[newtalpa];
-            for (unsigned int i = 0; i <sz; i++) newelementai[i] = elem[i];
-            cpt=newtalpa;
-            delete[] elem;
-            elem = newelementai;
+            std::allocator<T> a1;
+            T* a = a1.allocate(newtalpa);
+            a1.construct(a);
         }
     }
     template<class T>
     void Vector<T>::resize (unsigned int newdydis){
 
-        auto * newelementai = new double[newdydis];
+        auto *  newelementai= new double[newdydis];
         for (unsigned int i = 0; i != newdydis; i++) newelementai[i] = elem[i];
         sz=newdydis;
         if (cpt<newdydis) cpt=newdydis;
