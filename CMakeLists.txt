@@ -3,4 +3,4 @@ project(uzduotys)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(uzduotys main.cpp vector.cpp vector.h)
+add_executable(uzduotys main.cpp timer.hpp vector.h)

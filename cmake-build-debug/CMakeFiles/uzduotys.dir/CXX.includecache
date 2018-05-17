@@ -11,18 +11,18 @@ iostream
 -
 algorithm
 -
+vector
+-
 vector.h
 C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/vector.h
+timer.hpp
+C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/timer.hpp
 
-C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/vector.cpp
+C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/timer.hpp
 iostream
 -
-iomanip
+chrono
 -
-algorithm
--
-vector.h
-C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/vector.h
 
 C:/Users/Marta/Documents/objektinis/uzduotys/OOP-vector/vector.h
 iostream

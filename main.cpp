@@ -1,32 +1,30 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 #include "vector.h"
+#include "timer.hpp"
 int main() {
-    //Vector a(10, 3.8);
+    Timer t;
 
-    //Vector a(b);
-
-//    std::cout<<"cpt "<<a.capacity()<<std::endl;
-//    std::cout<<"paskutinis elementas "<<a.back()<<std::endl;
-//    std::cout<<"sz "<<a.size()<<std::endl;
-//    std::cout<<std::endl;
-
-    Vector <double> a {0,1,2,3,4,5,6,7,8,9};
-
-    Vector <double> c {2.1,4.1,6.1,8.1};
-    std::initializer_list<double> elm {7.8, 4.7,5.5,6.9};
-
-    //a.insert(a.begin()+2, elm);
-    //a.emplace_back(2);
-    swap(a,c);
-
-//    std::cout<<"cpt po resize "<<a.capacity()<<std::endl;
-//    std::cout<<"2 elementas su at "<<a.at(1)<<std::endl;
-//    std::cout<<"sz po resize "<<a.size()<<std::endl;
-    std::cout<<"elem po resize "<<std::endl;
-    for (int i = 0; i < a.size(); ++i) {
-        std::cout<<i<<"  "<<a[i]<<std::endl;
+    std::vector<int> v1;
+    for (int i = 1; i <= 100; ++i) v1.push_back(i);
+    for (int j = 0; j < v1.size(); ++j) {
+        std::cout<<j<<" "<<v1[j]<<std::endl;
     }
+    std::cout << t.elapsed() << " s";
+
+// Pradėti v2 užpildymo laiko matavimą
+
+    t.reset();
+
+    Vector<int> v2;
+    for (int i = 1; i <= 100; ++i){ v2.push_back(i); }
+    for (int j = 0; j < v2.size(); ++j) {
+        std::cout<<j<<" "<<v2[j]<<std::endl;
+    }
+
+    std::cout << t.elapsed() << " s";
+
 
 
     return 0;

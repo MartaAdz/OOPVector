@@ -263,7 +263,7 @@ public:
 
         auto newelementai = new T [0];
         delete [] elem;
-        
+
         elem = newelementai;
         sz = 0;
         cpt=0;
@@ -397,20 +397,24 @@ public:
     }
 
     template<class T>
-    void Vector<T>::push_back(const T& naujas)
+    void Vector<T>::push_back(const T& value)
     {
-        if(sz==cpt) cpt=cpt+3;
 
-        elem[sz]=naujas;
-        sz++;
+        if (cpt==0) cpt=1;
+
+        if (sz==cpt) cpt+=3;
+
+
+
+        auto newelementai= new T[cpt];
+        for (int i = 0; i < sz; ++i) {
+            newelementai[i]=elem[i];
+        }
+        newelementai[sz+1]=value;
+        delete[] elem;
+        elem=newelementai;
     }
-    template <class T>
-    void Vector<T>::push_back( T&& value ){
-        if(sz==cpt) cpt=cpt+3;
 
-        elem[sz]=std::move(value);
-        sz++;
-    };
 
     template <class T>
     template< class... Args >
