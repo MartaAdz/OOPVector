@@ -18,11 +18,10 @@ private:
 
 public:
 
-
     //MEMBERTYPES
 
     typedef T           value_type;
-   // typedef Allocator allocator_type;
+    //typedef std::allocator   allocator_type;
     typedef unsigned int size_type;
     typedef ptrdiff_t   difference_type;
     typedef T &         reference;
@@ -69,6 +68,7 @@ public:
     }
 
     //DESTRUKTORIUS
+
     ~Vector() {delete[]elem;}
 
     //OPERATORIAI
@@ -96,10 +96,10 @@ public:
     const_reference operator[](size_type i)const{ return elem[i];}
 
     reference front(){return elem[0]; }
-    const reference front() const {return elem[0]; }
+    const_reference front() const {return elem[0]; }
 
     reference back() {return elem[sz-1]; }
-    const reference back()const {return elem[sz-1]; }
+    const_reference back()const {return elem[sz-1]; }
 
         //ITERATORS
 
@@ -137,12 +137,11 @@ public:
     template <class InputIt> iterator insert(iterator pos, InputIt first, InputIt last);
     iterator insert( const_iterator pos, std::initializer_list<T> elm );
 
-    //emplace
 
     iterator erase(iterator);
     iterator erase(iterator first, iterator last );
 
-    void push_back(const T& naujas);
+    void push_back(const T& value);
     void push_back( T&& value);
 
     template< class... Args > void emplace_back( Args&&... args );
@@ -365,7 +364,20 @@ public:
 
     }
 
-//emplace
+    template <typename T>
+    template <class ... Args>
+    T* Vector<T>::emplace(const T* it, Args && ... args) {
+        T* pos = &elem[it - elem];
+        if (sz == cpt) {
+            cpt *= 2;
+            reserve(cpt);
+        }
+        memmove(pos + 1, pos, (sz - (it - elem)) * sizeof(T));
+        (*pos) = std::move( T( std::forward<Args>(args) ... ) );
+        ++sz;
+        return pos;
+    }
+
     template<class T>
     T* Vector<T>::erase (T* pos){
         auto newelementai = new T [sz -1];
@@ -403,10 +415,20 @@ public:
             cpt*=2;
             reserve(cpt);
         }
-
         sz++;
         elem [sz] = value;
-        std::cout<<"capacity po reserve "<<cpt<<"\n sz po reserve "<<sz<<std::endl;
+
+    }
+    template<class T>
+    void Vector<T>::push_back(T&& value)
+    {
+        if (sz >= cpt) {
+            cpt*=2;
+            reserve(cpt);
+        }
+        sz++;
+        elem [sz] = std::move(value);
+
     }
 
 
@@ -449,13 +471,6 @@ public:
 
         delete[] elem;
         elem = newelementai;
-    }
-    template <class T>
-    template< class... Args >
-    T* Vector<T>::emplace( const T* pos, Args&&... args ){              //needs attention
-
-
-
     }
 
     template<class T>
