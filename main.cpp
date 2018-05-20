@@ -24,10 +24,11 @@ int main() {
 //    }
 
     Vector<double> a{1.5,2.7,8.4,5.5};
-    a.emplace(a.begin()+2, 4.99);
-    for (int i = 0; i < a.size(); ++i) {
-        std::cout<<a[i]<<std::endl;
-
-    }
+    std::cout<<a.max_size()<<std::endl;
+//
+//    for (int i = 0; i < a.size(); ++i) {
+//        std::cout<<a[i]<<std::endl;
+//
+//    }
     return 0;
 }

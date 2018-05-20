@@ -21,7 +21,7 @@ public:
     //MEMBERTYPES
 
     typedef T           value_type;
-    //typedef std::allocator   allocator_type;
+    typedef std::allocator   allocator_type;
     typedef unsigned int size_type;
     typedef ptrdiff_t   difference_type;
     typedef T &         reference;
@@ -84,6 +84,7 @@ public:
     void assign (size_type count, const T& value);
     template< class InputIt > void assign( InputIt first, InputIt last );
     void assign( std::initializer_list<T> elm );
+    allocator_type get_allocator() const;
 
     //get_allocator()
 
@@ -251,11 +252,15 @@ public:
     }
 
     template <typename T>
-    unsigned int Vector<T>::max_size() const noexcept {             //NEEDS ATTENTION
+    unsigned int Vector<T>::max_size() const noexcept {
 
-        //return LNI_VECTOR_MAX_SZ;
+            return size_type(-1);
     }
 
+    template<class T>
+    allocator_type Vector<T>::get_allocator() const{
+           return allocator_type; 
+    }
 
     template<class T>
     void Vector<T>::clear(){
