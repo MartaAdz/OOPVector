@@ -21,7 +21,7 @@ public:
     //MEMBERTYPES
 
     typedef T           value_type;
-    typedef std::allocator   allocator_type;
+    //typedef std::allocator   allocator_type;
     typedef unsigned int size_type;
     typedef ptrdiff_t   difference_type;
     typedef T &         reference;
@@ -84,7 +84,7 @@ public:
     void assign (size_type count, const T& value);
     template< class InputIt > void assign( InputIt first, InputIt last );
     void assign( std::initializer_list<T> elm );
-    allocator_type get_allocator() const;
+//    allocator_type get_allocator() const;
 
     //get_allocator()
 
@@ -162,7 +162,7 @@ public:
 
         if (cpt<count) cpt=count;
 
-        auto newelementai = new T [sz];
+        auto newelementai = new T [cpt];
 
         for (unsigned int i = 0; i < count; ++i) newelementai[i]=value;
 
@@ -178,7 +178,7 @@ public:
         size_type count = last-first;
         if (cpt<count) cpt=count;
 
-        auto newelementai = new T [sz];
+        auto newelementai = new T [cpt];
 
         for (unsigned int i = 0; i < count; ++i) {
             newelementai[i]=*first;
@@ -194,7 +194,7 @@ public:
         size_t count = elm.size();
         if (cpt<count) cpt=count;
 
-        auto newelementai = new T [sz];
+        auto newelementai = new T [cpt];
 
         for (int i = 0; i < count; ++i) newelementai[i]=elm.begin()+i;
 
@@ -217,7 +217,7 @@ public:
     template<class T>
     Vector<T>& Vector<T>::operator = (const Vector<T> & v){
 
-        auto*p= new T [v.sz];
+        auto*p= new T [v.cpt];
         for (int i=0; i!=v.sz; i++) p[i]=v.elem[i];
 
         delete[]elem;
@@ -231,7 +231,7 @@ public:
     template<class T>
     Vector<T>& Vector<T>::operator=(Vector&& v) noexcept{
 
-        auto*p= new T [v.sz];
+        auto*p= new T [v.cpt];
         for (int i=0; i!=v.sz; i++) p[i]=std::move(v.elem[i]);
 
         delete[]elem;
@@ -257,10 +257,6 @@ public:
             return size_type(-1);
     }
 
-    template<class T>
-    allocator_type Vector<T>::get_allocator() const{
-           return allocator_type; 
-    }
 
     template<class T>
     void Vector<T>::clear(){
@@ -277,7 +273,7 @@ public:
     T* Vector<T>::insert(T* pos, const T& elm){
         if(sz==cpt) cpt*=2;
         sz++;
-        auto * newelementai = new T [sz];
+        auto * newelementai = new T [cpt];
 
         for (unsigned int j = 0; j != *pos; ++j) newelementai[j] = elem[j];
         unsigned int index = pos - begin();
@@ -293,7 +289,7 @@ public:
     T* Vector<T>::insert(const T* pos, T&& elm){
         if(sz==cpt) cpt*=2;
         sz++;
-        auto * newelementai = new T [sz];
+        auto * newelementai = new T [cpt];
          unsigned int index = pos - begin();
         newelementai[index]=elm;
         for (int j = 0; j != *pos; ++j) newelementai[j] = std::move(elem[j]);
@@ -310,7 +306,7 @@ public:
         if(cpt<sz+count) cpt*=2;
         sz+=count;
 
-        auto * newelementai = new T [sz];
+        auto * newelementai = new T [cpt];
 
         for (int i = 0; i != *pos; ++i) newelementai[i]=elem[i];
 
@@ -350,7 +346,7 @@ public:
         size_t count = elm.size();
         if (cpt<sz+count) cpt*=2;
         sz+=count;
-        auto newelementai = new T [sz];
+        auto newelementai = new T [cpt];
 
         for (int i = 0; i != *pos; ++i) newelementai[i]=elem[i];
 
@@ -385,7 +381,7 @@ public:
 
     template<class T>
     T* Vector<T>::erase (T* pos){
-        auto newelementai = new T [sz -1];
+        auto newelementai = new T [cpt];
         for (unsigned int i = 0; i != *pos; ++i) {
             newelementai[i]=elem[i];
         }
@@ -399,7 +395,7 @@ public:
     }
     template<class T>
     T* Vector<T>::erase(T* first, T* last ){
-        auto newelementai = new T [sz -1];
+        auto newelementai = new T [cpt];
         auto diff=last-first;
         for (unsigned int i = 0; i != *first+1; ++i) {
             newelementai[i]=elem[i];
@@ -448,9 +444,13 @@ public:
     template<class T>
     void Vector<T>::reserve(size_t newtalpa){
         if(newtalpa>cpt){
-            std::allocator<T> a1;
-            T* a = a1.allocate(newtalpa);
-            a1.construct(a);
+
+            auto * newelementai = new T[newtalpa];
+            for (unsigned int i = 0; i <sz; i++) newelementai[i] = elem[i];
+            cpt=newtalpa;
+            delete[] elem;
+            elem = newelementai;
+
         }
     }
     template<class T>
@@ -481,7 +481,7 @@ public:
     template<class T>
     void Vector<T>::pop_back(){
         sz--;
-        auto * newelementai = new double[sz];
+        auto * newelementai = new double[cpt];
         for (unsigned int i = 0; i != sz; i++) newelementai[i] = elem[i];
 
         delete[] elem;
