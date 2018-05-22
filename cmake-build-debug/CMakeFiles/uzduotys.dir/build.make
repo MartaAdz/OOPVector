@@ -56,38 +56,38 @@ include CMakeFiles/uzduotys.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/uzduotys.dir/flags.make
 
-CMakeFiles/uzduotys.dir/main.cpp.obj: CMakeFiles/uzduotys.dir/flags.make
-CMakeFiles/uzduotys.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/uzduotys.dir/main.cpp.obj"
-	C:\PROGRA~1\MINGW-~1\mingw64\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\uzduotys.dir\main.cpp.obj -c C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\main.cpp
+CMakeFiles/uzduotys.dir/main.obj: CMakeFiles/uzduotys.dir/flags.make
+CMakeFiles/uzduotys.dir/main.obj: ../main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/uzduotys.dir/main.obj"
+	C:\PROGRA~1\MINGW-~1\mingw64\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\uzduotys.dir\main.obj -c C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\main.cpp
 
-CMakeFiles/uzduotys.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/uzduotys.dir/main.cpp.i"
-	C:\PROGRA~1\MINGW-~1\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\main.cpp > CMakeFiles\uzduotys.dir\main.cpp.i
+CMakeFiles/uzduotys.dir/main.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/uzduotys.dir/main.i"
+	C:\PROGRA~1\MINGW-~1\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\main.cpp > CMakeFiles\uzduotys.dir\main.i
 
-CMakeFiles/uzduotys.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/uzduotys.dir/main.cpp.s"
-	C:\PROGRA~1\MINGW-~1\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\main.cpp -o CMakeFiles\uzduotys.dir\main.cpp.s
+CMakeFiles/uzduotys.dir/main.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/uzduotys.dir/main.s"
+	C:\PROGRA~1\MINGW-~1\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Marta\Documents\objektinis\uzduotys\OOP-vector\main.cpp -o CMakeFiles\uzduotys.dir\main.s
 
-CMakeFiles/uzduotys.dir/main.cpp.obj.requires:
+CMakeFiles/uzduotys.dir/main.obj.requires:
 
-.PHONY : CMakeFiles/uzduotys.dir/main.cpp.obj.requires
+.PHONY : CMakeFiles/uzduotys.dir/main.obj.requires
 
-CMakeFiles/uzduotys.dir/main.cpp.obj.provides: CMakeFiles/uzduotys.dir/main.cpp.obj.requires
-	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.cpp.obj.provides.build
-.PHONY : CMakeFiles/uzduotys.dir/main.cpp.obj.provides
+CMakeFiles/uzduotys.dir/main.obj.provides: CMakeFiles/uzduotys.dir/main.obj.requires
+	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.obj.provides.build
+.PHONY : CMakeFiles/uzduotys.dir/main.obj.provides
 
-CMakeFiles/uzduotys.dir/main.cpp.obj.provides.build: CMakeFiles/uzduotys.dir/main.cpp.obj
+CMakeFiles/uzduotys.dir/main.obj.provides.build: CMakeFiles/uzduotys.dir/main.obj
 
 
 # Object files for target uzduotys
 uzduotys_OBJECTS = \
-"CMakeFiles/uzduotys.dir/main.cpp.obj"
+"CMakeFiles/uzduotys.dir/main.obj"
 
 # External object files for target uzduotys
 uzduotys_EXTERNAL_OBJECTS =
 
-uzduotys.exe: CMakeFiles/uzduotys.dir/main.cpp.obj
+uzduotys.exe: CMakeFiles/uzduotys.dir/main.obj
 uzduotys.exe: CMakeFiles/uzduotys.dir/build.make
 uzduotys.exe: CMakeFiles/uzduotys.dir/linklibs.rsp
 uzduotys.exe: CMakeFiles/uzduotys.dir/objects1.rsp
@@ -100,7 +100,7 @@ CMakeFiles/uzduotys.dir/build: uzduotys.exe
 
 .PHONY : CMakeFiles/uzduotys.dir/build
 
-CMakeFiles/uzduotys.dir/requires: CMakeFiles/uzduotys.dir/main.cpp.obj.requires
+CMakeFiles/uzduotys.dir/requires: CMakeFiles/uzduotys.dir/main.obj.requires
 
 .PHONY : CMakeFiles/uzduotys.dir/requires
 

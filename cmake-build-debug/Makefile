@@ -122,32 +122,20 @@ uzduotys/fast:
 	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/build
 .PHONY : uzduotys/fast
 
-main.obj: main.cpp.obj
-
+# target to build an object file
+main.obj:
+	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.obj
 .PHONY : main.obj
 
-# target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.cpp.obj
-.PHONY : main.cpp.obj
-
-main.i: main.cpp.i
-
+# target to preprocess a source file
+main.i:
+	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.i
 .PHONY : main.i
 
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.cpp.s
-.PHONY : main.cpp.s
+main.s:
+	$(MAKE) -f CMakeFiles\uzduotys.dir\build.make CMakeFiles/uzduotys.dir/main.s
+.PHONY : main.s
 
 # Help Target
 help:

@@ -32,6 +32,7 @@ public:
     typedef const T * const_iterator;
     typedef std::reverse_iterator<iterator> reverse_iterator;
     typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef iterator    InputIt;
 
 
     //KONSTRUKTORIAI
@@ -82,7 +83,7 @@ public:
 
 
     void assign (size_type count, const T& value);
-    template< class InputIt > void assign( InputIt first, InputIt last );
+    void assign( InputIt first, InputIt last );
     void assign( std::initializer_list<T> elm );
 //    allocator_type get_allocator() const;
 
@@ -135,7 +136,7 @@ public:
     iterator insert(T* pos,const T& elm);
     iterator insert(const_iterator pos, T&& elm);
     iterator insert( const_iterator pos, size_type count, const T& elm );
-    template <class InputIt> iterator insert(iterator pos, InputIt first, InputIt last);
+    iterator insert(const_iterator pos, InputIt first, InputIt last);
     iterator insert( const_iterator pos, std::initializer_list<T> elm );
 
 
@@ -172,14 +173,12 @@ public:
     }
 
     template <class T>
-    template <class InputIt>
     void Vector<T>::assign( InputIt first, InputIt last ){
 
         size_type count = last-first;
         if (cpt<count) cpt=count;
 
         auto newelementai = new T [cpt];
-
         for (unsigned int i = 0; i < count; ++i) {
             newelementai[i]=*first;
             first++;
@@ -307,35 +306,54 @@ public:
         sz+=count;
 
         auto * newelementai = new T [cpt];
+        size_t index=0;
+        for (auto i = begin(); i != pos; ++i) {
 
-        for (int i = 0; i != *pos; ++i) newelementai[i]=elem[i];
+            newelementai[index]=*i;
+            index++;
+        }
 
-        for (int j = *pos; j != *pos+count; ++j) newelementai[j]=elm;
+        for (auto j = pos; j != pos+count; ++j){
+            newelementai[index]=elm;
+            index++;
+        }
 
-        for (int k = *pos+count; k != sz ; ++k) newelementai[k]=elem[k-count];
+        for (auto k = pos; k != end() ; ++k) {
+
+            newelementai[index]=*k;
+            index++;
+        }
 
         delete[] elem;
         elem = newelementai;
 
     }
     template<class T>
-    template <class InputIt>
-    T* Vector<T>::insert(iterator pos, InputIt first, InputIt last){
+    T* Vector<T>::insert(const_iterator pos, InputIt first, InputIt last) {
 
-        unsigned int count= last-first;
+        unsigned int count = last - first;
 
-        if (cpt<sz+count) cpt*=2;
-        sz+=count;
-        auto newelementai = new T [sz];
+        if (cpt < sz + count) cpt *= 2;
 
-        for (int i = 0; i != *pos; ++i) newelementai[i]=elem[i];
+        auto newelementai = new T[cpt];
 
-        for (int j = *pos; j < *pos+count; ++j) {
-            newelementai[j]=*first;
-            first++;
+        size_t k = 0;
+
+        for (auto i = begin(); i != pos; ++i){
+            newelementai[k] = (*i);
+            k++;
         }
-        for (int k = *pos+count; k < sz; ++k) newelementai[k]=elem[k-count];
 
+        for (auto  j = pos; j != pos+count; ++j) {
+            newelementai[k]=*first;
+            first++;
+            k++;
+        }
+        for (auto i = pos; i != end(); ++i){
+            newelementai[k]=(*i);
+            k++;
+        }
+        sz += count;
         delete [] elem;
         elem = newelementai;
 
@@ -345,21 +363,30 @@ public:
 
         size_t count = elm.size();
         if (cpt<sz+count) cpt*=2;
-        sz+=count;
+
         auto newelementai = new T [cpt];
-
-        for (int i = 0; i != *pos; ++i) newelementai[i]=elem[i];
-
-        unsigned int i = 0;
-        for (int j = *pos; j < *pos+elm.size(); ++j) {
-
-            T value = *(elm.begin()+i);
-            newelementai[j]=value;
-            i++;
-
+        size_t k = 0;
+        for (auto i = begin(); i != pos; ++i) {
+            newelementai[k] = *i;
+            k++;
         }
-        for (int k = *pos+elm.size(); k < sz; ++k) newelementai[k]=elem[k-count];
 
+        int index = 0;
+        for (auto j = pos; j != pos+elm.size(); ++j) {
+
+            T value = *(elm.begin()+index);
+            index ++;
+
+            newelementai[k]=value;
+            k++;
+        }
+        for (auto i = pos; i != end(); ++i) {
+
+            newelementai[k]=*i;
+            k++;
+        }
+
+        sz+=count;
         delete [] elem;
         elem = newelementai;
 
@@ -367,26 +394,29 @@ public:
 
     template <typename T>
     template <class ... Args>
-    T* Vector<T>::emplace(const T* it, Args && ... args) {
-        T* pos = &elem[it - elem];
+    T* Vector<T>::emplace(const T* pos, Args && ... args) {
+        T* it = &elem[pos - elem];
         if (sz == cpt) {
             cpt *= 2;
             reserve(cpt);
         }
-        memmove(pos + 1, pos, (sz - (it - elem)) * sizeof(T));
-        (*pos) = std::move( T( std::forward<Args>(args) ... ) );
+        memmove(it + 1, it, (sz - (pos - elem)) * sizeof(T));
+        (*it) = std::move( T( std::forward<Args>(args) ... ) );
         ++sz;
-        return pos;
+        return it;
     }
 
     template<class T>
     T* Vector<T>::erase (T* pos){
         auto newelementai = new T [cpt];
-        for (unsigned int i = 0; i != *pos; ++i) {
-            newelementai[i]=elem[i];
+        size_t index=0;
+        for (auto i = begin(); i != pos; ++i) {
+            newelementai[index]=*i;
+            index++;
         }
-        for (unsigned int j = *pos; j != sz; ++j) {
-            newelementai[j]=elem[j+1];
+        for (auto j = pos; j != end(); ++j) {
+            newelementai[index]=*(j+1);
+            index++;
         }
         delete [] elem;
         elem = newelementai;
@@ -397,11 +427,14 @@ public:
     T* Vector<T>::erase(T* first, T* last ){
         auto newelementai = new T [cpt];
         auto diff=last-first;
-        for (unsigned int i = 0; i != *first+1; ++i) {
-            newelementai[i]=elem[i];
+        size_t index=0;
+        for (auto i = begin(); i != first+1; ++i) {
+            newelementai[index]=*i;
+            index++;
         }
-        for (unsigned int j = *last-1; j !=sz; ++j) {
-            newelementai[j]=elem[j+diff];
+        for (auto j = last-1; j !=end(); ++j) {
+            newelementai[index]=*(j+diff);
+            index++;
         }
         delete [] elem;
         elem = newelementai;
@@ -425,7 +458,7 @@ public:
     {
         if (sz >= cpt) {
             cpt*=2;
-            reserve(cpt);
+
         }
         sz++;
         elem [sz] = std::move(value);
@@ -444,10 +477,9 @@ public:
     template<class T>
     void Vector<T>::reserve(size_t newtalpa){
         if(newtalpa>cpt){
-
-            auto * newelementai = new T[newtalpa];
-            for (unsigned int i = 0; i <sz; i++) newelementai[i] = elem[i];
             cpt=newtalpa;
+            auto * newelementai = new T [cpt];
+            for (unsigned int i = 0; i <sz; i++) newelementai[i] = elem[i];
             delete[] elem;
             elem = newelementai;
 
@@ -456,22 +488,27 @@ public:
     template<class T>
     void Vector<T>::resize (unsigned int newdydis){
 
-        auto *  newelementai= new double[newdydis];
-        for (unsigned int i = 0; i != newdydis; i++) newelementai[i] = elem[i];
-        sz=newdydis;
-        if (cpt<newdydis) cpt=newdydis;
-        delete[] elem;
-        elem = newelementai;
+        if (cpt<newdydis)  cpt=newdydis;
+
+            auto *  newelementai= new T [cpt];
+            for (unsigned int i = 0; i != sz; i++) newelementai[i] = elem[i];
+            sz=newdydis;
+
+            delete[] elem;
+            elem = newelementai ;
+
     }
 
     template<class T>
     void Vector<T>::resize(unsigned int count, const T& value ){
 
-        auto * newelementai = new T [sz+count];
+        if (cpt<count) cpt=count;
+
+        auto * newelementai = new T [cpt];
+
         for (unsigned int i = 0; i != size(); i++) newelementai[i] = elem[i];
         for (unsigned int j = sz; j < sz+count; ++j) newelementai[j]=value;
 
-        if (cpt<count) cpt=count;
         sz=count;
 
         delete[] elem;
@@ -481,7 +518,7 @@ public:
     template<class T>
     void Vector<T>::pop_back(){
         sz--;
-        auto * newelementai = new double[cpt];
+        auto * newelementai = new T [cpt];
         for (unsigned int i = 0; i != sz; i++) newelementai[i] = elem[i];
 
         delete[] elem;
