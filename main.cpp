@@ -29,15 +29,15 @@ int main() {
 
 
     Vector<int> v2a {2,4,6,8,10,12,14};
+    std::initializer_list<int> v3a {1,3,5,7,9,11,14};
 
     std::cout<<"size"<<v2a.size()<<std::endl;
     std::cout<<"cpt"<<v2a.capacity()<<std::endl;
-    v2a.resize(15, 3);
-//    v2a.erase(v2a.begin()+3, v2a.begin()+5);
+    v2a.emplace_back(4);
 
     int k=0;
     for (auto i = v2a.begin(); i < v2a.end(); ++i) {
-        std::cout<<k<<"   "<<*i<<std::endl;
+        std::cout<<k+1<<"   "<<*i<<std::endl;
         k++;
     }
     std::cout<<"size"<<v2a.size()<<std::endl;
@@ -83,39 +83,7 @@ int main() {
 //    const_iterator data() const noexcept{return elem; }
 //
 //    //CAPACITY
-//
-//    bool empty(){if (sz==0) return true; }
-//    unsigned int size(){return sz;}
-//    unsigned int max_size() const noexcept;
-//    void reserve(size_t newtalpa);
-//    size_t capacity(){return cpt;}
-//    void shrink_to_fit(){ cpt=sz;}
-//
-//    //MODIFIERS
-//
-//    void clear();
-//
-//    iterator insert(T* pos,const T& elm);
-//    iterator insert(const_iterator pos, T&& elm);
-//    iterator insert( const_iterator pos, size_type count, const T& elm );
-//    iterator insert(const_iterator pos, InputIt first, InputIt last);
-//    iterator insert( const_iterator pos, std::initializer_list<T> elm );
-//
-//
-//    iterator erase(iterator);
-//    iterator erase(iterator first, iterator last );
-//
-//    void push_back(const T& value);
-//    void push_back( T&& value);
-//
-//    template< class... Args > void emplace_back( Args&&... args );
-//
-//    void resize (unsigned int newdydis);
-//    void resize(unsigned int count, const T& value );
-//
-//    template< class... Args > iterator emplace( const_iterator pos, Args&&... args );
-//
-//    void pop_back();
+
 
     return 0;
 }

@@ -159,9 +159,10 @@ public:
 
 
     template <class T>
-    void Vector<T>::assign (typename Vector<T>::size_type count, const T& value){
+    void Vector<T>::assign (unsigned int count, const T& value){
 
         if (cpt<count) cpt=count;
+        sz=count;
 
         auto newelementai = new T [cpt];
 
@@ -173,11 +174,11 @@ public:
     }
 
     template <class T>
-    void Vector<T>::assign( InputIt first, InputIt last ){
+    void Vector<T>::assign( T* first, T* last ){
 
         size_type count = last-first;
         if (cpt<count) cpt=count;
-
+        sz=count;
         auto newelementai = new T [cpt];
         for (unsigned int i = 0; i < count; ++i) {
             newelementai[i]=*first;
@@ -192,10 +193,14 @@ public:
 
         size_t count = elm.size();
         if (cpt<count) cpt=count;
-
+        sz=count;
         auto newelementai = new T [cpt];
+        size_t index=0;
 
-        for (int i = 0; i < count; ++i) newelementai[i]=elm.begin()+i;
+        for (auto i = elm.begin(); i != elm.end(); ++i) {
+            newelementai[index]=*i;
+            index++;
+        }
 
         delete [] elem;
         elem = newelementai;
@@ -273,12 +278,20 @@ public:
         if(sz==cpt) cpt*=2;
         sz++;
         auto * newelementai = new T [cpt];
+        size_t index=0;
 
-        for (unsigned int j = 0; j != *pos; ++j) newelementai[j] = elem[j];
-        unsigned int index = pos - begin();
+        for (auto j = begin(); j != pos; ++j) {
+
+            newelementai[index] = *j;
+            index++;
+        }
         newelementai[index]=elm;
+        index++;
 
-        for (unsigned int i = *pos+1; i < sz; ++i) newelementai[i] = elem[i-1];
+        for (auto i = pos+1; i != end(); ++i){
+            newelementai[index] = *(i-1);
+            index++;
+        }
 
         delete[] elem;
         elem = newelementai;
@@ -287,13 +300,21 @@ public:
     template<class T>
     T* Vector<T>::insert(const T* pos, T&& elm){
         if(sz==cpt) cpt*=2;
-        sz++;
+
         auto * newelementai = new T [cpt];
-         unsigned int index = pos - begin();
+        size_t index=0;
+        sz++;
+        for (auto j = begin(); j != pos; ++j) {
+
+            newelementai[index] = std::move(elem[index]);
+            index++;
+        }
         newelementai[index]=elm;
-        for (int j = 0; j != *pos; ++j) newelementai[j] = std::move(elem[j]);
-        newelementai[pos]=elm;
-        for (int i = *pos+1; i < sz; ++i) newelementai[i] = std::move(elem[i-1]);
+        index++;
+        for (auto i = pos+1; i != end(); ++i){
+            newelementai[index] = std::move(elem[index-1]);
+            index++;
+        }
 
         delete[] elem;
         elem = newelementai;
@@ -445,23 +466,37 @@ public:
     template<class T>
     void Vector<T>::push_back(const T& value)
     {
-        if (sz >= cpt) {
+        if (cpt==0){
+
+            cpt=1;
+            reserve(cpt);
+        }
+
+        if (sz+1 >= cpt) {
             cpt*=2;
             reserve(cpt);
         }
-        sz++;
-        elem [sz] = value;
+
+        elem [sz++] = value;
 
     }
     template<class T>
     void Vector<T>::push_back(T&& value)
     {
+
+        if (cpt==0){
+
+            cpt=1;
+            reserve(cpt);
+        }
+
         if (sz >= cpt) {
             cpt*=2;
-
+            reserve(cpt);
         }
-        sz++;
-        elem [sz] = std::move(value);
+
+        elem [sz++] = std::move(value);
+
 
     }
 
@@ -502,12 +537,12 @@ public:
     template<class T>
     void Vector<T>::resize(unsigned int count, const T& value ){
 
-        if (cpt<count) cpt=count;
+        if (cpt<sz+count) cpt=count;
 
         auto * newelementai = new T [cpt];
 
         for (unsigned int i = 0; i != size(); i++) newelementai[i] = elem[i];
-        for (unsigned int j = sz; j < sz+count; ++j) newelementai[j]=value;
+        for (unsigned int j = sz; j < count; ++j) newelementai[j]=value;
 
         sz=count;
 
