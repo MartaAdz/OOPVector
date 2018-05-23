@@ -46,6 +46,16 @@ public:
         std::fill_n(elem, d, reiksme);
     }
 
+    Vector(iterator first, iterator last) {
+        size_type count = last - first;
+        cpt = count ;
+        elem = new T[cpt];
+        for (size_t i = 0; i < count; ++i) {
+            elem[i] = *first;
+            first++;
+        }
+        sz = count;
+    }
     Vector(const Vector&v){
         elem=new T[v.sz];
         sz=v.sz;
@@ -469,12 +479,16 @@ public:
         if (cpt==0){
 
             cpt=1;
-            reserve(cpt);
+            auto elem = new T[cpt];
+
         }
 
         if (sz+1 >= cpt) {
             cpt*=2;
-            reserve(cpt);
+            auto newelementai = new T[cpt];
+            for (unsigned int i = 0; i <sz; i++) newelementai[i] = elem[i];
+            delete[] elem;
+            elem = newelementai;
         }
 
         elem [sz++] = value;
@@ -487,12 +501,16 @@ public:
         if (cpt==0){
 
             cpt=1;
-            reserve(cpt);
+            auto elem = new T[cpt];
         }
 
         if (sz >= cpt) {
             cpt*=2;
-            reserve(cpt);
+            auto newelementai = new T[cpt];
+            for (unsigned int i = 0; i <sz; i++) newelementai[i] = elem[i];
+            delete[] elem;
+            elem = newelementai;
+
         }
 
         elem [sz++] = std::move(value);
