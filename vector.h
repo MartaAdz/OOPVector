@@ -21,7 +21,6 @@ public:
     //MEMBERTYPES
 
     typedef T           value_type;
-    //typedef std::allocator   allocator_type;
     typedef unsigned int size_type;
     typedef ptrdiff_t   difference_type;
     typedef T &         reference;
