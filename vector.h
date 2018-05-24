@@ -95,9 +95,6 @@ public:
     void assign (size_type count, const T& value);
     void assign( InputIt first, InputIt last );
     void assign( std::initializer_list<T> elm );
-//    allocator_type get_allocator() const;
-
-    //get_allocator()
 
         //ELEMENT_ACCESS
 
@@ -517,7 +514,6 @@ public:
 
 
     }
-
 
     template <class T>
     template< class... Args >
