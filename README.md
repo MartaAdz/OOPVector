@@ -25,3 +25,37 @@ Testuota iman 10 rezultatų vidurkį
 | ------------- |--------| --------|--------|--------|
 | std::vector      | 0.0029265 | 0.0390852 | 0.2297559 | 2.338244 |
 | Vector   | 0.0012008 | 0.026957 | 0.213356 | 2.749406 |
+
+### Cool dalykai
+```
+template<class T>
+    T* Vector<T>::insert(const_iterator pos, InputIt first, InputIt last) {
+
+        unsigned int count = last - first;
+
+        if (cpt < sz + count) cpt *= 2;
+
+        auto newelementai = new T[cpt];
+
+        size_t k = 0;
+
+        for (auto i = begin(); i != pos; ++i){
+            newelementai[k] = (*i);
+            k++;
+        }
+
+        for (auto  j = pos; j != pos+count; ++j) {
+            newelementai[k]=*first;
+            first++;
+            k++;
+        }
+        for (auto i = pos; i != end(); ++i){
+            newelementai[k]=(*i);
+            k++;
+        }
+        sz += count;
+        delete [] elem;
+        elem = newelementai;
+
+    }
+```
