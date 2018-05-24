@@ -59,3 +59,7 @@ template<class T>
 
     }
 ```
+
+# Pastabele
+
+- Nenaudota alokotariai/delokatoriai
