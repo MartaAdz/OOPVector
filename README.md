@@ -27,7 +27,7 @@ Testuota iman 10 rezultatų vidurkį
 | Vector   | 0.0012008 | 0.026957 | 0.213356 | 2.749406 |
 
 ### Cool dalykai
-```
+```cpp
 template<class T>
     T* Vector<T>::insert(const_iterator pos, InputIt first, InputIt last) {
 
